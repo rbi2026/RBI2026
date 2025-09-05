@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBI Grade B - Daily Study Tracker</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #003366; /* A professional blue color */
+            margin-bottom: 30px;
+            border-bottom: 2px solid #0055a4;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #003366;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #eef2f7;
+        }
+        td[contenteditable="true"] {
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        td[contenteditable="true"]:focus {
+            background-color: #fffde7;
+            outline: 2px solid #0055a4;
+        }
+        .done-col {
+            text-align: center;
+            vertical-align: middle;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            cursor: pointer;
+        }
+        .notes-col {
+            min-width: 200px; /* Give more space for notes */
+        }
+        .task-col {
+            min-width: 250px; /* Give more space for tasks */
+        }
+        .instructions {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #fffbe6;
+            border-left: 5px solid #ffc107;
+            font-size: 0.9em;
+        }
+        .instructions h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>RBI Grade B - Daily Study Tracker</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th class="task-col">Morning Task</th>
+                    <th class="task-col">Evening Task</th>
+                    <th>Revision</th>
+                    <th class="done-col">Done</th>
+                    <th class="notes-col">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true">Sep 6, 2025</td>
+                    <td contenteditable="true">Saturday</td>
+                    <td contenteditable="true">
+                        <b>Economics:</b> Chapter 1 - Inflation (Measurement, Causes, Remedies)<br>
+                        <b>Current Affairs:</b> Read The Hindu Editorial + PIB
+                    </td>
+                    <td contenteditable="true">
+                        <b>Quant:</b> Percentage (Concepts + 20 Practice Qs)<br>
+                        <b>Management:</b> Chapter 1 - Basics of Management
+                    </td>
+                    <td contenteditable="true">Revise yesterday's Current Affairs notes.</td>
+                    <td class="done-col"><input type="checkbox"></td>
+                    <td contenteditable="true">Found a good video on WPI vs CPI differences. Need to make notes.</td>
+                </tr>
+
+                <tr>
+                    <td contenteditable="true">...</td>
+                    <td contenteditable="true">...</td>
+                    <td contenteditable="true">...</td>
+                    <td contenteditable="true">...</td>
+                    <td contenteditable="true">...</td>
+                    <td class="done-col"><input type="checkbox"></td>
+                    <td contenteditable="true">...</td>
+                </tr>
+                 <tr>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td class="done-col"><input type="checkbox"></td>
+                    <td contenteditable="true"></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</body>
+</html>
