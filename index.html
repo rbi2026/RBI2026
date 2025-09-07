@@ -81,6 +81,46 @@
         .instructions h3 {
             margin-top: 0;
         }
+        /* Responsive table for mobile devices */
+        @media (max-width: 800px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+                width: 100%;
+            }
+            thead tr {
+                display: none;
+            }
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+                background: #fff;
+                padding: 10px 0;
+            }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                min-height: 40px;
+            }
+            td:before {
+                position: absolute;
+                top: 12px;
+                left: 15px;
+                width: 45%;
+                white-space: nowrap;
+                font-weight: bold;
+                color: #003366;
+                font-size: 0.95em;
+                content: attr(data-label);
+            }
+            .done-col {
+                text-align: left;
+                padding-left: 50%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -102,235 +142,235 @@
             </thead>
             <tbody>
                 <tr>
-                    <td contenteditable="true">Sep 6, 2025</td>
-                    <td contenteditable="true">Saturday</td>
-                    <td contenteditable="true">
+                    <td contenteditable="true" data-label="Date">Sep 6, 2025</td>
+                    <td contenteditable="true" data-label="Day">Saturday</td>
+                    <td contenteditable="true" data-label="Morning Task">
                         <b>Economics:</b> Chapter 1 - Inflation (Measurement, Causes, Remedies)<br>
                         <b>Current Affairs:</b> Read The Hindu Editorial + PIB
                     </td>
-                    <td contenteditable="true">
+                    <td contenteditable="true" data-label="Evening Task">
                         <b>Quant:</b> Percentage (Concepts + 20 Practice Qs)<br>
                         <b>Management:</b> Chapter 1 - Basics of Management
                     </td>
-                    <td contenteditable="true">Revise yesterday's Current Affairs notes.</td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true">Found a good video on WPI vs CPI differences. Need to make notes.</td>
+                    <td contenteditable="true" data-label="Revision">Revise yesterday's Current Affairs notes.</td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes">Found a good video on WPI vs CPI differences. Need to make notes.</td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 7, 2025</td>
-                    <td contenteditable="true">Sunday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 7, 2025</td>
+                    <td contenteditable="true" data-label="Day">Sunday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 8, 2025</td>
-                    <td contenteditable="true">Monday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 8, 2025</td>
+                    <td contenteditable="true" data-label="Day">Monday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 9, 2025</td>
-                    <td contenteditable="true">Tuesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 9, 2025</td>
+                    <td contenteditable="true" data-label="Day">Tuesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 10, 2025</td>
-                    <td contenteditable="true">Wednesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 10, 2025</td>
+                    <td contenteditable="true" data-label="Day">Wednesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 11, 2025</td>
-                    <td contenteditable="true">Thursday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 11, 2025</td>
+                    <td contenteditable="true" data-label="Day">Thursday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 12, 2025</td>
-                    <td contenteditable="true">Friday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 12, 2025</td>
+                    <td contenteditable="true" data-label="Day">Friday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 13, 2025</td>
-                    <td contenteditable="true">Saturday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 13, 2025</td>
+                    <td contenteditable="true" data-label="Day">Saturday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 14, 2025</td>
-                    <td contenteditable="true">Sunday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 14, 2025</td>
+                    <td contenteditable="true" data-label="Day">Sunday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 15, 2025</td>
-                    <td contenteditable="true">Monday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 15, 2025</td>
+                    <td contenteditable="true" data-label="Day">Monday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 16, 2025</td>
-                    <td contenteditable="true">Tuesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 16, 2025</td>
+                    <td contenteditable="true" data-label="Day">Tuesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 17, 2025</td>
-                    <td contenteditable="true">Wednesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 17, 2025</td>
+                    <td contenteditable="true" data-label="Day">Wednesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 18, 2025</td>
-                    <td contenteditable="true">Thursday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 18, 2025</td>
+                    <td contenteditable="true" data-label="Day">Thursday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 19, 2025</td>
-                    <td contenteditable="true">Friday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 19, 2025</td>
+                    <td contenteditable="true" data-label="Day">Friday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 20, 2025</td>
-                    <td contenteditable="true">Saturday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 20, 2025</td>
+                    <td contenteditable="true" data-label="Day">Saturday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 21, 2025</td>
-                    <td contenteditable="true">Sunday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 21, 2025</td>
+                    <td contenteditable="true" data-label="Day">Sunday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 22, 2025</td>
-                    <td contenteditable="true">Monday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 22, 2025</td>
+                    <td contenteditable="true" data-label="Day">Monday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 23, 2025</td>
-                    <td contenteditable="true">Tuesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 23, 2025</td>
+                    <td contenteditable="true" data-label="Day">Tuesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 24, 2025</td>
-                    <td contenteditable="true">Wednesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 24, 2025</td>
+                    <td contenteditable="true" data-label="Day">Wednesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 25, 2025</td>
-                    <td contenteditable="true">Thursday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 25, 2025</td>
+                    <td contenteditable="true" data-label="Day">Thursday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 26, 2025</td>
-                    <td contenteditable="true">Friday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 26, 2025</td>
+                    <td contenteditable="true" data-label="Day">Friday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 27, 2025</td>
-                    <td contenteditable="true">Saturday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 27, 2025</td>
+                    <td contenteditable="true" data-label="Day">Saturday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 28, 2025</td>
-                    <td contenteditable="true">Sunday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 28, 2025</td>
+                    <td contenteditable="true" data-label="Day">Sunday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 29, 2025</td>
-                    <td contenteditable="true">Monday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 29, 2025</td>
+                    <td contenteditable="true" data-label="Day">Monday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
                 <tr>
-                    <td contenteditable="true">Sep 30, 2025</td>
-                    <td contenteditable="true">Tuesday</td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td contenteditable="true"></td>
-                    <td class="done-col"><input type="checkbox"></td>
-                    <td contenteditable="true"></td>
+                    <td contenteditable="true" data-label="Date">Sep 30, 2025</td>
+                    <td contenteditable="true" data-label="Day">Tuesday</td>
+                    <td contenteditable="true" data-label="Morning Task"></td>
+                    <td contenteditable="true" data-label="Evening Task"></td>
+                    <td contenteditable="true" data-label="Revision"></td>
+                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                    <td contenteditable="true" data-label="Notes"></td>
                 </tr>
             </tbody>
         </table>
