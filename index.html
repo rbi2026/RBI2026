@@ -4,448 +4,506 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBI Grade B - Daily Study Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --primary-bg: #f8f9fa;
+            --container-bg: #ffffff;
+            --header-gradient-start: #2c5a9c;
+            --header-gradient-end: #1a3a6b;
+            --header-text: #ffffff;
+            --accent-color: #0056b3;
+            --text-color: #212529;
+            --border-color: #dee2e6;
+            --hover-bg: #e9ecef;
+            --today-highlight: #fff9e6;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: var(--font-family);
+            background-color: var(--primary-bg);
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
+            line-height: 1.6;
         }
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background-color: #ffffff;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            background-color: var(--container-bg);
+            padding: 20px 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
         }
+
         h1 {
             text-align: center;
-            color: #003366; /* A professional blue color */
-            margin-bottom: 30px;
-            border-bottom: 2px solid #0055a4;
-            padding-bottom: 10px;
+            color: var(--header-gradient-end);
+            margin-bottom: 25px;
+            font-weight: 700;
         }
+        
+        .table-wrapper {
+            overflow-x: auto; /* Ensures table is scrollable if needed */
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: auto; /* Changed from fixed to allow column resizing */
         }
+
         th, td {
-            border: 1px solid #ddd;
-            padding: 12px 15px;
+            padding: 14px 16px;
             text-align: left;
             vertical-align: top;
+            border-bottom: 1px solid var(--border-color);
+            word-break: break-word;
         }
+        
+        /* === Redesigned Header Bar === */
         th {
-            background-color: #003366;
-            color: #ffffff;
+            background: var(--header-gradient-end); /* Fallback */
+            background: linear-gradient(to bottom, var(--header-gradient-start), var(--header-gradient-end));
+            color: var(--header-text);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 13px;
+        }
+
+        th:first-of-type {
+            border-top-left-radius: 8px;
+        }
+        th:last-of-type {
+            border-top-right-radius: 8px;
+        }
+
+        /* === Ensure specific headers & columns don't wrap === */
+        th:nth-child(2), /* Day Header */
+        th:nth-child(6) { /* Done Header */
+            white-space: nowrap;
+        }
+        td:nth-child(2) { /* Day Column Cells */
+            white-space: nowrap;
+        }
+
+        /* === Increase width of Notes column on desktop === */
+        th:last-of-type, td:last-of-type {
+            width: 25%;
+            min-width: 220px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--hover-bg);
+        }
+
+        /* Highlight for the current day's row */
+        tr.today {
+            background-color: var(--today-highlight);
+            border-left: 4px solid #ffc107;
+            border-right: 4px solid #ffc107;
+        }
+        
+        tr.today td:first-child {
             font-weight: bold;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #eef2f7;
-        }
+
         td[contenteditable="true"] {
-            cursor: pointer;
+            cursor: text;
             transition: background-color 0.2s ease-in-out;
         }
+
         td[contenteditable="true"]:focus {
-            background-color: #fffde7;
-            outline: 2px solid #0055a4;
+            background-color: #e6f7ff;
+            outline: 2px solid var(--accent-color);
+            border-radius: 4px;
         }
+        
+        b {
+           color: var(--header-gradient-end);
+        }
+
         .done-col {
             text-align: center;
             vertical-align: middle;
         }
+
         input[type="checkbox"] {
-            transform: scale(1.5);
+            transform: scale(1.4);
             cursor: pointer;
+            accent-color: var(--accent-color);
         }
-        .notes-col {
-            min-width: 200px; /* Give more space for notes */
-        }
-        .task-col {
-            min-width: 250px; /* Give more space for tasks */
-        }
-        .instructions {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #fffbe6;
-            border-left: 5px solid #ffc107;
-            font-size: 0.9em;
-        }
-        .instructions h3 {
-            margin-top: 0;
-        }
-        /* Responsive table for mobile devices */
-        @media (max-width: 800px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
-                width: 100%;
+        
+        /* =================================== */
+        /* ==     Mobile Responsive View    == */
+        /* =================================== */
+        @media (max-width: 900px) {
+            th:last-of-type, td:last-of-type {
+                width: auto; /* Reset width for mobile */
+                min-width: 0;
             }
-            thead tr {
-                display: none;
-            }
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            h1 { font-size: 1.5em; }
+            thead { display: none; }
+            table, tbody, tr, td { display: block; width: 100%; }
             tr {
-                margin-bottom: 15px;
-                border: 1px solid #ddd;
+                margin-bottom: 20px;
                 border-radius: 8px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-                background: #fff;
-                padding: 10px 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+                border: 1px solid var(--border-color);
+                overflow: hidden;
             }
             td {
+                padding: 12px 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
                 border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50%;
-                min-height: 40px;
-                word-break: break-word;
-                white-space: pre-line;
+                border-bottom: 1px solid #f0f0f0;
+                white-space: normal; 
+            }
+            tr:last-child td:last-child, td:last-child {
+                border-bottom: none;
             }
             td:before {
-                position: absolute;
-                top: 12px;
-                left: 15px;
-                width: 45%;
-                white-space: nowrap;
-                font-weight: bold;
-                color: #003366;
-                font-size: 0.95em;
                 content: attr(data-label);
+                font-weight: 600;
+                color: var(--header-gradient-end);
+                width: 40%;
+                flex-shrink: 0;
+                padding-right: 10px;
             }
-            .done-col {
-                text-align: left;
-                padding-left: 50%;
+            .done-col { justify-content: flex-start; }
+            .done-col:before { width: auto; }
+            input[type="checkbox"] { margin-left: auto; }
+            td[data-label="Morning Task"],
+            td[data-label="Evening Task"],
+            td[data-label="Revision"],
+            td[data-label="Notes"] {
+                flex-direction: column;
+                align-items: flex-start;
+                line-height: 1.5;
             }
-        }
-        /* Prevent text overflow in table cells */
-        td, th {
-            word-break: break-word;
-            white-space: pre-line;
+            td[data-label="Morning Task"]:before,
+            td[data-label="Evening Task"]:before,
+            td[data-label="Revision"]:before,
+            td[data-label="Notes"]:before {
+                margin-bottom: 8px;
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>RBI Grade B - Daily Study Tracker</h1>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Day</th>
-                    <th class="task-col">Morning Task</th>
-                    <th class="task-col">Evening Task</th>
-                    <th>Revision</th>
-                    <th class="done-col">Done</th>
-                    <th class="notes-col">Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 6, 2025</td>
-                    <td contenteditable="true" data-label="Day">Saturday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Chapter 1 - Inflation (Measurement, Causes, Remedies)<br>
-                        <b>Current Affairs:</b> Read The Hindu Editorial + PIB
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Quant:</b> Percentage (Concepts + 20 Practice Qs)<br>
-                        <b>Management:</b> Chapter 1 - Basics of Management
-                    </td>
-                    <td contenteditable="true" data-label="Revision">Revise yesterday's Current Affairs notes.</td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes">Found a good video on WPI vs CPI differences. Need to make notes.</td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 7, 2025</td>
-                    <td contenteditable="true" data-label="Day">Sunday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 8, 2025</td>
-                    <td contenteditable="true" data-label="Day">Monday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 9, 2025</td>
-                    <td contenteditable="true" data-label="Day">Tuesday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 10, 2025</td>
-                    <td contenteditable="true" data-label="Day">Wednesday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 11, 2025</td>
-                    <td contenteditable="true" data-label="Day">Thursday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 12, 2025</td>
-                    <td contenteditable="true" data-label="Day">Friday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 13, 2025</td>
-                    <td contenteditable="true" data-label="Day">Saturday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 14, 2025</td>
-                    <td contenteditable="true" data-label="Day">Sunday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 15, 2025</td>
-                    <td contenteditable="true" data-label="Day">Monday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Introduction to Indian Economy (GDP, GNP, NNP, PCI, PPP)<br>
-                        <b>Current Affairs:</b> Read The Hindu + PIB (Economic & RBI news)
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Management:</b> Functions of Management (Planning, Organizing, Directing, Controlling)<br>
-                        <b>Quant:</b> Ratio & Proportion (20 Questions Practice)
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Revise GDP/GNP formulas & quick notes<br>
-                        Revise yesterday’s CA
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 16, 2025</td>
-                    <td contenteditable="true" data-label="Day">Tuesday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Inflation (Types – Demand-Pull, Cost-Push, WPI, CPI, Control Measures)<br>
-                        <b>Current Affairs:</b> RBI notifications + Economic Survey summary (1 chapter)
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Finance:</b> Structure of Financial System (Banks, NBFCs, Regulators)<br>
-                        <b>Reasoning:</b> Syllogism + Inequalities (20 Qs)
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Revise GDP + Inflation notes<br>
-                        Revise previous day CA
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 17, 2025</td>
-                    <td contenteditable="true" data-label="Day">Wednesday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Monetary Policy – Repo, Reverse Repo, LAF, MPC framework<br>
-                        <b>Current Affairs:</b> Schemes related to Health & Education
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Management:</b> Leadership Theories (Trait & Behavioral)<br>
-                        <b>Quant:</b> Percentages (20 Qs Practice)
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Revise Monetary Policy instruments<br>
-                        Revise last 2 days CA
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 18, 2025</td>
-                    <td contenteditable="true" data-label="Day">Thursday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Fiscal Policy – Types of Deficits (Fiscal, Revenue, Primary)<br>
-                        <b>Current Affairs:</b> Government Schemes on Financial Inclusion (PMJDY, Mudra)
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Finance:</b> Money Market Instruments (T-Bills, CP, CD)<br>
-                        <b>Reasoning:</b> Seating Arrangement (Linear + Circular)
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Quick notes of Fiscal Policy<br>
-                        Revise CA (past 3 days)
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 19, 2025</td>
-                    <td contenteditable="true" data-label="Day">Friday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Poverty & Unemployment (Causes, Types, Govt Measures – MGNREGA, Skill India)<br>
-                        <b>Current Affairs:</b> RBI Annual Report Summary (Key Highlights)
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Management:</b> Motivation Theories (Maslow + Herzberg)<br>
-                        <b>Quant:</b> Data Interpretation (Bar/Line Graph – 3 sets)
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Revise Poverty schemes & theories<br>
-                        Revise all CA of the week
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 20, 2025</td>
-                    <td contenteditable="true" data-label="Day">Saturday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Balance of Payments – Current & Capital Account<br>
-                        <b>Current Affairs:</b> Read Editorials + Focus on Economy section
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Finance:</b> Basel Norms I, II, III (Basics)<br>
-                        <b>Reasoning:</b> Puzzle + Blood Relations
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Revise BoP notes<br>
-                        Revise CA (Thu–Sat)
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 21, 2025</td>
-                    <td contenteditable="true" data-label="Day">Sunday</td>
-                    <td contenteditable="true" data-label="Morning Task">
-                        <b>Economics:</b> Globalization – Impact on Indian Economy<br>
-                        <b>Current Affairs:</b> Weekly CA Revision (Monday–Saturday)
-                    </td>
-                    <td contenteditable="true" data-label="Evening Task">
-                        <b>Descriptive English:</b> Practice 1 essay (e.g., "Role of RBI in Indian Economy")<br>
-                        <b>Quant:</b> Revision of Week’s topics (Mixed Qs)
-                    </td>
-                    <td contenteditable="true" data-label="Revision">
-                        Revise all Economics topics covered in Week 1
-                    </td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 22, 2025</td>
-                    <td contenteditable="true" data-label="Day">Monday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 23, 2025</td>
-                    <td contenteditable="true" data-label="Day">Tuesday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 24, 2025</td>
-                    <td contenteditable="true" data-label="Day">Wednesday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 25, 2025</td>
-                    <td contenteditable="true" data-label="Day">Thursday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 26, 2025</td>
-                    <td contenteditable="true" data-label="Day">Friday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 27, 2025</td>
-                    <td contenteditable="true" data-label="Day">Saturday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 28, 2025</td>
-                    <td contenteditable="true" data-label="Day">Sunday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 29, 2025</td>
-                    <td contenteditable="true" data-label="Day">Monday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-                <tr>
-                    <td contenteditable="true" data-label="Date">Sep 30, 2025</td>
-                    <td contenteditable="true" data-label="Day">Tuesday</td>
-                    <td contenteditable="true" data-label="Morning Task"></td>
-                    <td contenteditable="true" data-label="Evening Task"></td>
-                    <td contenteditable="true" data-label="Revision"></td>
-                    <td class="done-col" data-label="Done"><input type="checkbox"></td>
-                    <td contenteditable="true" data-label="Notes"></td>
-                </tr>
-            </tbody>
-        </table>
-
-
+        <h1>RBI Grade B - Daily Study Tracker 🚀</h1>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th>Morning Task</th>
+                        <th>Evening Task</th>
+                        <th>Revision</th>
+                        <th class="done-col">Done</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body">
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 15, 2025</td>
+                        <td contenteditable="true" data-label="Day">Monday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Introduction to Indian Economy (GDP, GNP, NNP, PCI, PPP)<br>
+                            <b>Current Affairs:</b> Read The Hindu + PIB (Economic & RBI news)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Functions of Management (Planning, Organizing, Directing, Controlling)<br>
+                            <b>Quant:</b> Ratio & Proportion (20 Questions Practice)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise GDP/GNP formulas & quick notes<br>
+                            Revise yesterday’s CA
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 16, 2025</td>
+                        <td contenteditable="true" data-label="Day">Tuesday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Inflation (Types – Demand-Pull, Cost-Push, WPI, CPI, Control Measures)<br>
+                            <b>Current Affairs:</b> RBI notifications + Economic Survey summary (1 chapter)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Finance:</b> Structure of Financial System (Banks, NBFCs, Regulators)<br>
+                            <b>Reasoning:</b> Syllogism + Inequalities (20 Qs)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise GDP + Inflation notes<br>
+                            Revise previous day CA
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 17, 2025</td>
+                        <td contenteditable="true" data-label="Day">Wednesday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Monetary Policy – Repo, Reverse Repo, LAF, MPC framework<br>
+                            <b>Current Affairs:</b> Schemes related to Health & Education
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Leadership Theories (Trait & Behavioral)<br>
+                            <b>Quant:</b> Percentages (20 Qs Practice)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Monetary Policy instruments<br>
+                            Revise last 2 days CA
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 18, 2025</td>
+                        <td contenteditable="true" data-label="Day">Thursday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Fiscal Policy – Types of Deficits (Fiscal, Revenue, Primary)<br>
+                            <b>Current Affairs:</b> Government Schemes on Financial Inclusion (PMJDY, Mudra)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Finance:</b> Money Market Instruments (T-Bills, CP, CD)<br>
+                            <b>Reasoning:</b> Seating Arrangement (Linear + Circular)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Quick notes of Fiscal Policy<br>
+                            Revise CA (past 3 days)
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 19, 2025</td>
+                        <td contenteditable="true" data-label="Day">Friday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Poverty & Unemployment (Causes, Types, Govt Measures – MGNREGA, Skill India)<br>
+                            <b>Current Affairs:</b> RBI Annual Report Summary (Key Highlights)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Motivation Theories (Maslow + Herzberg)<br>
+                            <b>Quant:</b> Data Interpretation (Bar/Line Graph – 3 sets)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Poverty schemes & theories<br>
+                            Revise all CA of the week
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 20, 2025</td>
+                        <td contenteditable="true" data-label="Day">Saturday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Balance of Payments – Current & Capital Account<br>
+                            <b>Current Affairs:</b> Read Editorials + Focus on Economy section
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Finance:</b> Basel Norms I, II, III (Basics)<br>
+                            <b>Reasoning:</b> Puzzle + Blood Relations
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise BoP notes<br>
+                            Revise CA (Thu–Sat)
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 21, 2025</td>
+                        <td contenteditable="true" data-label="Day">Sunday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Globalization – Impact on Indian Economy<br>
+                            <b>Current Affairs:</b> Weekly CA Revision (Monday–Saturday)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Descriptive English:</b> Practice 1 essay (e.g., "Role of RBI in Indian Economy")<br>
+                            <b>Quant:</b> Revision of Week’s topics (Mixed Qs)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise all Economics topics covered in Week 1
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 22, 2025</td>
+                        <td contenteditable="true" data-label="Day">Monday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Finance:</b> Capital Market Instruments (Shares, Debentures)<br>
+                            <b>Current Affairs:</b> Read The Hindu + PIB
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Communication (Process, Barriers, Types)<br>
+                            <b>Quant:</b> Averages & Mixtures (Concepts + 15 Qs)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Week 1 Finance topics<br>
+                            Revise weekend CA
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 23, 2025</td>
+                        <td contenteditable="true" data-label="Day">Tuesday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Finance:</b> Foreign Exchange Market (Basics of FEMA, FOREX)<br>
+                            <b>Current Affairs:</b> Financial news focus
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Human Resource Development (Concepts)<br>
+                            <b>Reasoning:</b> Direction Sense + Coding-Decoding
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Capital Market notes<br>
+                            Revise Monday's CA
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 24, 2025</td>
+                        <td contenteditable="true" data-label="Day">Wednesday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Banking System in India (History, Structure)<br>
+                            <b>Current Affairs:</b> Read Union Budget Summary (Part 1)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Finance:</b> Financial Inclusion (Schemes, Importance)<br>
+                            <b>Quant:</b> Time & Work (Concepts + 15 Qs)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise FOREX basics<br>
+                            Revise last 2 days CA
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 25, 2025</td>
+                        <td contenteditable="true" data-label="Day">Thursday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Economics:</b> Agriculture (Role in Indian Economy, Schemes)<br>
+                            <b>Current Affairs:</b> Read Union Budget Summary (Part 2)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Corporate Governance (Mechanisms, Issues)<br>
+                            <b>Reasoning:</b> Seating Arrangement (Advanced Puzzles)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Banking System notes<br>
+                            Revise CA (past 3 days)
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 26, 2025</td>
+                        <td contenteditable="true" data-label="Day">Friday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Finance:</b> Risk Management in Banks (Credit, Market, Ops)<br>
+                            <b>Current Affairs:</b> Economic Survey Summary (Part 1)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Management:</b> Business Ethics (Importance, Theories)<br>
+                            <b>Quant:</b> Data Interpretation (Caselet DI - 2 sets)
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Financial Inclusion<br>
+                            Revise all CA of the week
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 27, 2025</td>
+                        <td contenteditable="true" data-label="Day">Saturday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Mock Test:</b> Phase 1 Full Length Mock Test (2 hours)<br>
+                            <b>Current Affairs:</b> Economic Survey Summary (Part 2)
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Mock Analysis:</b> Detailed analysis of mock test (Identify weak areas)<br>
+                            <b>Reasoning:</b> Practice weak topics from mock
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Revise Risk Management notes<br>
+                            Revise Budget/ES highlights
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" data-label="Date">Sep 28, 2025</td>
+                        <td contenteditable="true" data-label="Day">Sunday</td>
+                        <td contenteditable="true" data-label="Morning Task">
+                            <b>Weekly Revision:</b> Revise all ESI + Finance topics from Week 2<br>
+                            <b>Current Affairs:</b> Weekly CA Magazine/Recap
+                        </td>
+                        <td contenteditable="true" data-label="Evening Task">
+                            <b>Weekly Revision:</b> Revise all Management topics from Week 2<br>
+                            <b>Descriptive English:</b> Write 1 Essay + 1 Precis
+                        </td>
+                        <td contenteditable="true" data-label="Revision">
+                            Quick review of Week 1 topics
+                        </td>
+                        <td class="done-col" data-label="Done"><input type="checkbox"></td>
+                        <td contenteditable="true" data-label="Notes"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <script>
+        // This script finds today's date and highlights the corresponding row in the table.
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            const rows = document.querySelectorAll('#schedule-body tr');
+
+            rows.forEach(row => {
+                const dateCell = row.querySelector('td[data-label="Date"]');
+                if (dateCell && dateCell.textContent.trim() === formattedDate) {
+                    row.classList.add('today');
+                    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
